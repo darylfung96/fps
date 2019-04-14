@@ -19,7 +19,6 @@ public class handgun_damage : MonoBehaviour {
             RaycastHit shot;
             if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out shot))
             {
-                Debug.Log(transform.TransformDirection(Vector3.forward));
                 targetDistance = shot.distance;
                 if (shot.distance < allowedRange)
                 {

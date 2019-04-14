@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class gun_fire : MonoBehaviour {
 
+    public AudioSource gunFireSound;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -13,8 +15,7 @@ public class gun_fire : MonoBehaviour {
 	void Update () {
 		if (Input.GetButtonDown("Fire1"))
         {
-            AudioSource gunShot = GetComponent<AudioSource>();
-            gunShot.Play();
+            gunFireSound.Play();
             GetComponent<Animation>().Play();
             global_ammo.currentAmmo -= 1;
         }
