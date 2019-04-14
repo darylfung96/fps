@@ -16,6 +16,7 @@ public class gun_fire : MonoBehaviour {
             AudioSource gunShot = GetComponent<AudioSource>();
             gunShot.Play();
             GetComponent<Animation>().Play();
+            global_ammo.currentAmmo -= 1;
         }
     }
 }
