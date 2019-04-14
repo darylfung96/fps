@@ -9,8 +9,8 @@ public class global_ammo : MonoBehaviour {
     public int internalAmmo;
     public GameObject ammoDisplay;
 
-    public static int loadedAmmo;
-    public int internalLoaded;
+    public static int clipAmmo;
+    public int internalClip;
     public GameObject loadedAmmoDisplay;
 
 
@@ -22,8 +22,8 @@ public class global_ammo : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         internalAmmo = currentAmmo;
-        internalLoaded = loadedAmmo;
+        internalClip = clipAmmo;
         ammoDisplay.GetComponent<Text>().text = "" + internalAmmo;
-        loadedAmmoDisplay.GetComponent<Text>().text = "" + internalLoaded;
+        loadedAmmoDisplay.GetComponent<Text>().text = "" + internalClip;
     }
 }

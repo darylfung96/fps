@@ -17,7 +17,7 @@ public class ammo_pickup : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        global_ammo.loadedAmmo += 10;
+        global_ammo.clipAmmo += 10;
         this.gameObject.SetActive(false);
         ammoSound.Play();
     }

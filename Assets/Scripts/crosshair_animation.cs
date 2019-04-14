@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class crosshair_animation : MonoBehaviour {
-    public GameObject upCrosshair;
-    public GameObject downCrosshair;
-    public GameObject rightCrosshair;
-    public GameObject leftCrosshair;
+
 
 	// Use this for initialization
 	void Start () {
@@ -17,12 +14,9 @@ public class crosshair_animation : MonoBehaviour {
     void Update()
     {
 
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") && global_ammo.currentAmmo > 0)
         {
-            upCrosshair.GetComponent<Animation>().Play();
-            downCrosshair.GetComponent<Animation>().Play();
-            leftCrosshair.GetComponent<Animation>().Play();
-            rightCrosshair.GetComponent<Animation>().Play();
+
         }
 
     }
