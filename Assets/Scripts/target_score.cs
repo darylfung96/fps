@@ -15,8 +15,8 @@ public class target_score : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+
+    }
 
     void getShot(object[] items)
     {

@@ -5,6 +5,8 @@ using UnityEngine;
 public class enemy : MonoBehaviour {
 
     public int health = 100;
+    public GameObject player;
+    public float speed;
 
 	// Use this for initialization
 	void Start () {
@@ -25,6 +27,11 @@ public class enemy : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+
+        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed);
+        transform.LookAt(player.transform);
+
+
         if (health <= 0)
         {
             Destroy(gameObject);

@@ -5,6 +5,8 @@ using System;
 
 public class gun_fire : MonoBehaviour {
 
+    public Camera camera;
+
     public GameObject upCrosshair;
     public GameObject downCrosshair;
     public GameObject rightCrosshair;
@@ -20,9 +22,13 @@ public class gun_fire : MonoBehaviour {
     public Boolean isRapidFire = false;
     public Boolean isFiring = false;
 
-	// Use this for initialization
-	void Start () {
-		
+    // use to damage
+    public int damage = 5;
+    public float targetDistance;
+    public float allowedRange = 15;
+
+    // Use this for initialization
+    void Start () {
 	}
 	
 	// Update is called once per frame
@@ -65,6 +71,9 @@ public class gun_fire : MonoBehaviour {
             leftCrosshair.GetComponent<Animation>().Play();
             rightCrosshair.GetComponent<Animation>().Play();
             flash.SetActive(true);
+
+            callShot();
+
             StartCoroutine(startFlash(0.1f));
         }
     }
@@ -83,6 +92,9 @@ public class gun_fire : MonoBehaviour {
             leftCrosshair.GetComponent<Animation>().Play();
             rightCrosshair.GetComponent<Animation>().Play();
             flash.SetActive(true);
+
+            callShot();
+
             StartCoroutine(startFlash(0.1f));
         }
     }
@@ -99,5 +111,23 @@ public class gun_fire : MonoBehaviour {
     {
         yield return new WaitForSeconds(1);
         isReloading = false;
+    }
+
+    private void callShot()
+    {
+        RaycastHit shot;
+
+        if (Physics.Raycast(camera.ScreenPointToRay(Input.mousePosition), out shot))
+        {
+            targetDistance = shot.distance;
+            if (shot.distance < allowedRange)
+            {
+                Vector3 fwd = transform.TransformDirection(Vector3.forward);
+                Debug.DrawRay(transform.position, fwd * 50, Color.green);
+                Debug.Log(shot.transform.name);
+                object[] items = { damage, transform.TransformDirection(Vector3.forward) };
+                shot.transform.SendMessage("getShot", items, SendMessageOptions.DontRequireReceiver);
+            }
+        }
     }
 }
