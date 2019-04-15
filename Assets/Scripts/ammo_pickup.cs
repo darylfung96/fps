@@ -5,6 +5,7 @@ using UnityEngine;
 public class ammo_pickup : MonoBehaviour {
 
     public AudioSource ammoSound;
+    public int ammo;
 
 	// Use this for initialization
 	void Start () {
@@ -17,7 +18,7 @@ public class ammo_pickup : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        global_ammo.clipAmmo += 10;
+        global_ammo.clipAmmo += ammo;
         this.gameObject.SetActive(false);
         ammoSound.Play();
     }

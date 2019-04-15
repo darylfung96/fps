@@ -7,6 +7,8 @@ using System;
 public class open_door : MonoBehaviour {
 
     public GameObject textDisplay;
+    public GameObject objectiveComplete;
+
     public float distanceToPlayer;
     public bool doorOpened = false;
     public Dictionary<Boolean, System.Action> doorAnimations;
@@ -44,6 +46,7 @@ public class open_door : MonoBehaviour {
             {
                 doorAnimations[doorOpened]();
                 doorOpened = !doorOpened;
+                objectiveComplete.SetActive(true);
             }
         }
     }

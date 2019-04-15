@@ -11,11 +11,14 @@ public class gun_fire : MonoBehaviour {
     public GameObject leftCrosshair;
 
     public GameObject flash;
+    public int maxClip;
 
     public AudioSource gunFireSound;
     public AudioSource reloadSound;
-    public int maxClip = 7;
+
     public Boolean isReloading = false;
+    public Boolean isRapidFire = false;
+    public Boolean isFiring = false;
 
 	// Use this for initialization
 	void Start () {
@@ -23,19 +26,14 @@ public class gun_fire : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () { 
-		if (Input.GetButtonDown("Fire1") && global_ammo.currentAmmo > 0 && !isReloading)
+	void Update () {
+        if (isRapidFire)
         {
-            gunFireSound.Play();
-            GetComponent<Animation>().Play("gun_shot");
-            global_ammo.currentAmmo -= 1;
-
-            upCrosshair.GetComponent<Animation>().Play();
-            downCrosshair.GetComponent<Animation>().Play();
-            leftCrosshair.GetComponent<Animation>().Play();
-            rightCrosshair.GetComponent<Animation>().Play();
-            flash.SetActive(true);
-            StartCoroutine(startFlash());
+            rapidFireShot();
+        }
+        else
+        {
+            singleFireShot();
         }
 
         if (Input.GetButtonDown("Reload"))
@@ -52,13 +50,49 @@ public class gun_fire : MonoBehaviour {
                 StartCoroutine(reload());
             }
         }
-
     }
 
-    IEnumerator startFlash()
+    private void singleFireShot()
     {
-        yield return new WaitForSeconds(0.1f);
+        if (Input.GetButtonDown("Fire1") && global_ammo.currentAmmo > 0 && !isReloading)
+        {
+            gunFireSound.Play();
+            GetComponent<Animation>().Play("gun_shot");
+            global_ammo.currentAmmo -= 1;
+
+            upCrosshair.GetComponent<Animation>().Play();
+            downCrosshair.GetComponent<Animation>().Play();
+            leftCrosshair.GetComponent<Animation>().Play();
+            rightCrosshair.GetComponent<Animation>().Play();
+            flash.SetActive(true);
+            StartCoroutine(startFlash(0.1f));
+        }
+    }
+
+    private void rapidFireShot()
+    {
+        if (Input.GetButton("Fire1") && global_ammo.currentAmmo > 0 && !isReloading && !isFiring)
+        {
+            isFiring = true;
+            gunFireSound.Play();
+            GetComponent<Animation>().Play("gun_shot");
+            global_ammo.currentAmmo -= 1;
+
+            upCrosshair.GetComponent<Animation>().Play();
+            downCrosshair.GetComponent<Animation>().Play();
+            leftCrosshair.GetComponent<Animation>().Play();
+            rightCrosshair.GetComponent<Animation>().Play();
+            flash.SetActive(true);
+            StartCoroutine(startFlash(0.1f));
+        }
+    }
+
+
+    IEnumerator startFlash(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
         flash.SetActive(false);
+        isFiring = false;
     }
 
     IEnumerator reload()
