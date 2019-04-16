@@ -27,6 +27,13 @@ public class gun_fire : MonoBehaviour {
     public float targetDistance;
     public float allowedRange = 15;
 
+    // bullet hole
+    public GameObject bulletHole;
+
+    // blood
+    public GameObject blood;
+    public GameObject spiderBlood;
+
     // Use this for initialization
     void Start () {
 	}
@@ -123,10 +130,21 @@ public class gun_fire : MonoBehaviour {
             if (shot.distance < allowedRange)
             {
                 Vector3 fwd = transform.TransformDirection(Vector3.forward);
-                Debug.DrawRay(transform.position, fwd * 50, Color.green);
-                Debug.Log(shot.transform.name);
                 object[] items = { damage, transform.TransformDirection(Vector3.forward) };
                 shot.transform.SendMessage("getShot", items, SendMessageOptions.DontRequireReceiver);
+
+                if (shot.transform.tag == "zombie")
+                {
+                    Instantiate(blood, shot.point, Quaternion.FromToRotation(Vector3.up, shot.normal));
+                }
+                else if (shot.transform.tag == "spider")
+                {
+                    Instantiate(spiderBlood, shot.point, Quaternion.FromToRotation(Vector3.up, shot.normal));
+                }
+                else
+                {
+                    Instantiate(bulletHole, shot.point, Quaternion.FromToRotation(Vector3.up, shot.normal));
+                }
             }
         }
     }
