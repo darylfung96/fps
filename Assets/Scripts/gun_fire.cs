@@ -133,7 +133,7 @@ public class gun_fire : MonoBehaviour {
                 object[] items = { damage, transform.TransformDirection(Vector3.forward) };
                 shot.transform.SendMessage("getShot", items, SendMessageOptions.DontRequireReceiver);
 
-                if (shot.transform.tag == "zombie")
+                if (shot.transform.tag == "zombie" || shot.transform.tag == "wolf")
                 {
                     Instantiate(blood, shot.point, Quaternion.FromToRotation(Vector3.up, shot.normal));
                 }

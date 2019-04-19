@@ -17,7 +17,7 @@ public class splash : MonoBehaviour {
 
     IEnumerator loadMenu()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
         SceneManager.LoadScene(1);
 }
 }

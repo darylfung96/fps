@@ -11,16 +11,19 @@ public class open_door : MonoBehaviour {
 
     public float distanceToPlayer;
     public bool doorOpened = false;
-    public Dictionary<Boolean, System.Action> doorAnimations;
-    public Dictionary<Boolean, string> helperTexts;
+    public GameObject door;
+    public string doorOpenAnimation;
+    public string doorCloseAnimation;
 
+    private Dictionary<Boolean, Action> doorAnimations; 
+    private Dictionary<Boolean, string> helperTexts;
 
     // Use this for initialization
     void Start() {
         doorAnimations = new Dictionary<Boolean, Action>()
         {
-            {false, () => GetComponent<Animation>().Play("door_open_animation") },
-            {true, () => GetComponent<Animation>().Play("door_close_animation") }
+            {false, () => door.GetComponent<Animation>().Play(doorOpenAnimation) },
+            {true, () => door.GetComponent<Animation>().Play(doorCloseAnimation) }
         };
 
         helperTexts = new Dictionary<bool, string>()
@@ -46,7 +49,10 @@ public class open_door : MonoBehaviour {
             {
                 doorAnimations[doorOpened]();
                 doorOpened = !doorOpened;
-                objectiveComplete.SetActive(true);
+                GetComponent<AudioSource>().Play();
+
+                if (objectiveComplete != null)
+                    objectiveComplete.SetActive(true);
             }
         }
     }

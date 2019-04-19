@@ -12,6 +12,12 @@ public class player : MonoBehaviour {
     public GameObject showHurt;
     public List<AudioSource> hurtSounds;
 
+    // scope
+    public GameObject sniperScope;
+    public GameObject crosshairObject;
+    public GameObject playerCamera;
+    private bool isScope;
+
     private int hurtSoundsCount;
 
 	// Use this for initialization
@@ -26,6 +32,27 @@ public class player : MonoBehaviour {
 		if (health <= 0)
         {
             SceneManager.LoadScene(3);
+        }
+
+        if (Input.GetMouseButton(1))
+            toggleScope();
+    }
+
+    private void toggleScope()
+    {
+        isScope = !isScope;
+        if (isScope)
+        {
+            playerCamera.GetComponent<Camera>().fieldOfView = 25;
+            sniperScope.SetActive(true);
+            crosshairObject.SetActive(false);
+
+        }
+        else
+        {
+            playerCamera.GetComponent<Camera>().fieldOfView = 60;
+            sniperScope.SetActive(false);
+            crosshairObject.SetActive(true);
         }
     }
 

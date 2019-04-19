@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class menu : MonoBehaviour {
 
+    public GameObject player;
+    public GameObject pauseScript;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -18,5 +21,18 @@ public class menu : MonoBehaviour {
     public void playGame()
     {
         SceneManager.LoadScene(2);
+    }
+
+    public void resumeGame()
+    {
+        pause_game pauseClass = (pause_game) pauseScript.GetComponent(typeof(pause_game));
+        pauseClass.resumeGame();
+    }
+
+    public void respawnGame()
+    {
+        resumeGame();
+        Debug.Log("hello");
+        SceneManager.LoadScene(4);
     }
 }

@@ -40,6 +40,8 @@ public class pickup_gun : MonoBehaviour {
                 realGun.GetComponent<Animation>().Play("gun_reload");
                 gunText.GetComponent<Text>().text = gunName;
                 objectiveComplete.SetActive(true);
+                helperText.GetComponent<Text>().text = "";
+
             }
 
         }

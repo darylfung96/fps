@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameOver.unity
     guid: 08fa8388f43d342de9a9ecc3cef7b908
+  - enabled: 1
+    path: Assets/Scenes/RespawnScene.unity
+    guid: c635688dc6b8b4c8da57a467c27c865f
   m_configObjects: {}
