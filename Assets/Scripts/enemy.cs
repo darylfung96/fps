@@ -11,6 +11,11 @@ public class enemy : MonoBehaviour {
     public string walkAnimation;
     public string attackAnimation;
     public string dyingAnimation;
+    public bool isWalkAround = true;
+
+    public bool hasSurprised = false;
+    public AudioSource surprise;
+
     public int enemyDamage = 1;
     public float speed;
 
@@ -54,11 +59,17 @@ public class enemy : MonoBehaviour {
 
                 if (walkAnimation != "")
                     enemyAnimation.GetComponent<Animation>().Play(walkAnimation);
+
+                if (!hasSurprised)
+                {
+                    hasSurprised = true;
+                    surprise.Play();
+                }
             }
             // attack
             else if (shot.distance < 2 && shot.transform.tag == "player")
             {
-                transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed*0.2f * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * 0.5f * Time.deltaTime);
                 if (attackAnimation != "")
                     enemyAnimation.transform.GetComponent<Animation>().Play(attackAnimation);
 
@@ -79,6 +90,7 @@ public class enemy : MonoBehaviour {
                 }
                 else
                 {
+                    if (isWalkAround)
                         StartCoroutine(moveToPosition());
                 }
 

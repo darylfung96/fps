@@ -19,21 +19,22 @@ public class pause_game : MonoBehaviour {
         if (Input.GetButtonDown("Cancel"))
         {
             pause = !pause;
-        }
 
-        if (pause)
-        {
-            pauseMenu.SetActive(true);
-            player.GetComponent<FirstPersonController>().enabled = false;
-            Time.timeScale = 0;
-            Cursor.visible = true;
-        }
-        else
-        {
-            pauseMenu.SetActive(false);
-            player.GetComponent<FirstPersonController>().enabled = true;
-            Time.timeScale = 1;
-            Cursor.visible = false;
+
+            if (pause)
+            {
+                pauseMenu.SetActive(true);
+                player.GetComponent<FirstPersonController>().enabled = false;
+                Time.timeScale = 0;
+                Cursor.visible = true;
+            }
+            else
+            {
+                pauseMenu.SetActive(false);
+                player.GetComponent<FirstPersonController>().enabled = true;
+                Time.timeScale = 1;
+                Cursor.visible = false;
+            }
         }
 
     }

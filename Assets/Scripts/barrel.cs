@@ -6,6 +6,7 @@ public class barrel : MonoBehaviour {
 
     public GameObject realBarrel;
     public GameObject fakeBarrel;
+    public AudioSource explosionSound;
     public int health = 1;
 
 
