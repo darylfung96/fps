@@ -11,6 +11,9 @@ public class enemy : MonoBehaviour {
     public string walkAnimation;
     public string attackAnimation;
     public string dyingAnimation;
+
+    public int sightDistance = 20;
+    public int attackDistance = 2;
     public bool isWalkAround = true;
 
     public bool hasSurprised = false;
@@ -52,7 +55,7 @@ public class enemy : MonoBehaviour {
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out shot))
         {
             // chase players
-            if (shot.distance > 2 && shot.distance <= 20 && shot.transform.tag == "player")
+            if (shot.distance > attackDistance && shot.distance <= sightDistance && shot.transform.tag == "player")
             {
                 isMoving = false;
                 transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
@@ -67,7 +70,7 @@ public class enemy : MonoBehaviour {
                 }
             }
             // attack
-            else if (shot.distance < 2 && shot.transform.tag == "player")
+            else if (shot.distance < attackDistance && shot.transform.tag == "player")
             {
                 transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * 0.5f * Time.deltaTime);
                 if (attackAnimation != "")

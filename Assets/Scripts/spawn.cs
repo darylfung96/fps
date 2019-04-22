@@ -6,6 +6,8 @@ public class spawn : MonoBehaviour {
 
     public GameObject enemy;
     public GameObject objectiveComplete;
+    public AudioSource spawnAudio;
+    public GameObject playerCamera;
 
 	// Use this for initialization
 	void Start () {
@@ -20,6 +22,31 @@ public class spawn : MonoBehaviour {
     private void OnTriggerEnter(Collider other)
     {
         enemy.SetActive(true);
-        objectiveComplete.SetActive(true);
+
+        if (objectiveComplete != null)
+            objectiveComplete.SetActive(true);
+
+        if (spawnAudio != null)
+            spawnAudio.Play();
+
+        if (playerCamera != null)
+        {
+            playerCamera.GetComponent<Animator>().enabled = true;
+            StartCoroutine(disableAnimator());
+        }
+        StartCoroutine(destroySelf());
+    }
+
+    private IEnumerator disableAnimator()
+    {
+        yield return new WaitForSeconds(0.3f);
+        playerCamera.GetComponent<Animator>().enabled = false;
+    }
+
+    IEnumerator destroySelf()
+    {
+        yield return new WaitForSeconds(1);
+        playerCamera.GetComponent<Animator>().enabled = false;
+        Destroy(gameObject);
     }
 }
