@@ -6,6 +6,7 @@ public class spawn : MonoBehaviour {
 
     public GameObject enemy;
     public GameObject objectiveComplete;
+    public GameObject showNextObjective;
     public AudioSource spawnAudio;
     public GameObject playerCamera;
 
@@ -26,27 +27,22 @@ public class spawn : MonoBehaviour {
         if (objectiveComplete != null)
             objectiveComplete.SetActive(true);
 
+        if (showNextObjective != null)
+            showNextObjective.SetActive(true);
+
         if (spawnAudio != null)
             spawnAudio.Play();
 
         if (playerCamera != null)
         {
-            playerCamera.GetComponent<Animator>().enabled = true;
-            StartCoroutine(disableAnimator());
+            playerCamera.GetComponent<Animation>().Play("look_up");
         }
         StartCoroutine(destroySelf());
-    }
-
-    private IEnumerator disableAnimator()
-    {
-        yield return new WaitForSeconds(0.3f);
-        playerCamera.GetComponent<Animator>().enabled = false;
     }
 
     IEnumerator destroySelf()
     {
         yield return new WaitForSeconds(1);
-        playerCamera.GetComponent<Animator>().enabled = false;
         Destroy(gameObject);
     }
 }

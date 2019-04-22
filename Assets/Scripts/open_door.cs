@@ -8,6 +8,7 @@ public class open_door : MonoBehaviour {
 
     public GameObject textDisplay;
     public GameObject objectiveComplete;
+    public GameObject showNextObjective;
 
     public float distanceToPlayer;
     public bool doorOpened = false;
@@ -52,7 +53,10 @@ public class open_door : MonoBehaviour {
                 GetComponent<AudioSource>().Play();
 
                 if (objectiveComplete != null)
+                {
                     objectiveComplete.SetActive(true);
+                    showNextObjective.SetActive(true);
+                }
             }
         }
     }

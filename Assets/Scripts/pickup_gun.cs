@@ -11,6 +11,7 @@ public class pickup_gun : MonoBehaviour {
     public GameObject realGun;
     public GameObject gunText;
     public GameObject objectiveComplete;
+    public GameObject showNextObjective;
     public AudioSource pickupAudio;
     public string gunName;
 
@@ -40,6 +41,7 @@ public class pickup_gun : MonoBehaviour {
                 realGun.GetComponent<Animation>().Play("gun_reload");
                 gunText.GetComponent<Text>().text = gunName;
                 objectiveComplete.SetActive(true);
+                showNextObjective.SetActive(true);
                 helperText.GetComponent<Text>().text = "";
 
             }
