@@ -32,7 +32,6 @@ public class menu : MonoBehaviour {
     public void respawnGame()
     {
         resumeGame();
-        Debug.Log("hello");
         SceneManager.LoadScene(4);
     }
 }

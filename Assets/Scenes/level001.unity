@@ -24567,7 +24567,7 @@ MonoBehaviour:
   objectiveComplete: {fileID: 1428548584}
   showNextObjective: {fileID: 1305806913}
   spawnAudio: {fileID: 0}
-  playerCamera: {fileID: 435268039}
+  playerCamera: {fileID: 0}
 --- !u!65 &1575425792
 BoxCollider:
   m_ObjectHideFlags: 0
