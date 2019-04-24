@@ -1,0 +1,61 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.Networking;
+
+public class pickup_gun_network : NetworkBehaviour {
+
+    public float distanceToGun;
+    public GameObject helperText;
+    public GameObject fakeGun;
+    public GameObject realGun;
+    public GameObject gunText;
+    public GameObject objectiveComplete;
+    public GameObject showNextObjective;
+    public AudioSource pickupAudio;
+    public string gunName;
+
+
+	// Use this for initialization
+	void Start () {
+		
+	}
+	
+	// Update is called once per frame
+	void Update () {
+        distanceToGun = player_casting.distanceToTarget;
+    }
+
+    private void OnMouseOver()
+    {
+        if (!isLocalPlayer) return;
+
+        distanceToGun = player_casting.distanceToTarget;
+        if (distanceToGun <= 2)
+        {
+            helperText.GetComponent<Text>().text = "Pickup " + gunName;
+
+            if (Input.GetButtonDown("Action"))
+            {
+                pickupAudio.Play();
+                fakeGun.SetActive(false);
+                realGun.SetActive(true);
+                realGun.GetComponent<Animation>().Play("gun_reload");
+                gunText.GetComponent<Text>().text = gunName;
+                objectiveComplete.SetActive(true);
+                showNextObjective.SetActive(true);
+                helperText.GetComponent<Text>().text = "";
+
+            }
+
+        }
+    }
+
+    private void OnMouseExit()
+    {
+        helperText.GetComponent<Text>().text = "";
+        }
+        
+
+}

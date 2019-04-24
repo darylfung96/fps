@@ -6,6 +6,8 @@ using System;
 public class gun_fire : MonoBehaviour {
 
     public Camera camera;
+    public GameObject currentPlayer;
+    public ammo currentPlayerAmmo;
 
     public GameObject upCrosshair;
     public GameObject downCrosshair;
@@ -36,10 +38,12 @@ public class gun_fire : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        currentPlayerAmmo = (ammo)currentPlayerAmmo.GetComponent (typeof(ammo));
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
         if (isRapidFire)
         {
             rapidFireShot();
@@ -51,15 +55,15 @@ public class gun_fire : MonoBehaviour {
 
         if (Input.GetButtonDown("Reload"))
         {
-            if (global_ammo.clipAmmo > 0 && global_ammo.currentAmmo < maxClip)
+            if (currentPlayerAmmo.clipAmmo > 0 && currentPlayerAmmo.currentAmmo < maxClip)
             {
                 isReloading = true;
                 GetComponent<Animation>().Play("gun_reload");
                 reloadSound.Play();
 
-                int reloadAmount = Math.Max(0, Math.Min(maxClip, global_ammo.clipAmmo));
-                global_ammo.currentAmmo += reloadAmount;
-                global_ammo.clipAmmo -= reloadAmount;
+                int reloadAmount = Math.Max(0, Math.Min(maxClip, currentPlayerAmmo.clipAmmo));
+                currentPlayerAmmo.currentAmmo += reloadAmount;
+                currentPlayerAmmo.clipAmmo -= reloadAmount;
                 StartCoroutine(reload());
             }
         }
@@ -67,11 +71,11 @@ public class gun_fire : MonoBehaviour {
 
     private void singleFireShot()
     {
-        if (Input.GetButtonDown("Fire1") && global_ammo.currentAmmo > 0 && !isReloading)
+        if (Input.GetButtonDown("Fire1") && currentPlayerAmmo.currentAmmo > 0 && !isReloading)
         {
             gunFireSound.Play();
             GetComponent<Animation>().Play("gun_shot");
-            global_ammo.currentAmmo -= 1;
+            currentPlayerAmmo.currentAmmo -= 1;
 
             upCrosshair.GetComponent<Animation>().Play();
             downCrosshair.GetComponent<Animation>().Play();
@@ -87,12 +91,12 @@ public class gun_fire : MonoBehaviour {
 
     private void rapidFireShot()
     {
-        if (Input.GetButton("Fire1") && global_ammo.currentAmmo > 0 && !isReloading && !isFiring)
+        if (Input.GetButton("Fire1") && currentPlayerAmmo.currentAmmo > 0 && !isReloading && !isFiring)
         {
             isFiring = true;
             gunFireSound.Play();
             GetComponent<Animation>().Play("gun_shot");
-            global_ammo.currentAmmo -= 1;
+            currentPlayerAmmo.currentAmmo -= 1;
 
             upCrosshair.GetComponent<Animation>().Play();
             downCrosshair.GetComponent<Animation>().Play();

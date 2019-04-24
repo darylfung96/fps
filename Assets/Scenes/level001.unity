@@ -336,7 +336,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 123862486}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 349857a86485541039cdd68f83212a20, type: 3}
+  m_Script: {fileID: 11500000, guid: e920c274dc04d4f2498c7ff13a181c1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   distanceToGun: 0
@@ -347,7 +347,39 @@ MonoBehaviour:
   objectiveComplete: {fileID: 0}
   showNextObjective: {fileID: 0}
   pickupAudio: {fileID: 0}
-  gunName: MP5
+  gunName: MP5K
+--- !u!114 &123862490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 123862486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 169
+    i1: 240
+    i2: 170
+    i3: 127
+    i4: 88
+    i5: 244
+    i6: 36
+    i7: 15
+    i8: 89
+    i9: 217
+    i10: 55
+    i11: 4
+    i12: 157
+    i13: 228
+    i14: 217
+    i15: 52
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 1
 --- !u!1 &137097427
 GameObject:
   m_ObjectHideFlags: 0
@@ -751,6 +783,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoSound: {fileID: 0}
+  currentPlayer: {fileID: 0}
+  currentPlayerAmmo: {fileID: 0}
   ammo: 30
 --- !u!65 &295205098
 BoxCollider:
@@ -824,7 +858,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 326093646}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 349857a86485541039cdd68f83212a20, type: 3}
+  m_Script: {fileID: 11500000, guid: e920c274dc04d4f2498c7ff13a181c1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   distanceToGun: 0
@@ -836,6 +870,38 @@ MonoBehaviour:
   showNextObjective: {fileID: 0}
   pickupAudio: {fileID: 0}
   gunName: M9
+--- !u!114 &326093649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 326093646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 111
+    i1: 142
+    i2: 233
+    i3: 229
+    i4: 127
+    i5: 10
+    i6: 232
+    i7: 116
+    i8: 41
+    i9: 196
+    i10: 14
+    i11: 119
+    i12: 200
+    i13: 183
+    i14: 88
+    i15: 34
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 1
 --- !u!65 &326093651
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1705,6 +1771,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoSound: {fileID: 0}
+  currentPlayer: {fileID: 0}
+  currentPlayerAmmo: {fileID: 0}
   ammo: 7
 --- !u!65 &574317887
 BoxCollider:
@@ -2316,9 +2384,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 211da4a840fc64f62b8beb1455bd71a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  internalAmmo: 0
+  currentAmmo: 0
   ammoDisplay: {fileID: 0}
-  internalClip: 0
+  clipAmmo: 0
   loadedAmmoDisplay: {fileID: 0}
 --- !u!224 &679345149
 RectTransform:
@@ -7158,6 +7226,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoSound: {fileID: 0}
+  currentPlayer: {fileID: 0}
+  currentPlayerAmmo: {fileID: 0}
   ammo: 7
 --- !u!65 &717718683
 BoxCollider:
@@ -12524,6 +12594,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoSound: {fileID: 0}
+  currentPlayer: {fileID: 0}
+  currentPlayerAmmo: {fileID: 0}
   ammo: 7
 --- !u!65 &949437659
 BoxCollider:
@@ -14824,9 +14896,10 @@ GameObject:
   - component: {fileID: 1496738577}
   - component: {fileID: 1496738576}
   - component: {fileID: 1496738575}
-  - component: {fileID: 1496738580}
   - component: {fileID: 1496738579}
   - component: {fileID: 1496738581}
+  - component: {fileID: 1496738582}
+  - component: {fileID: 1496738580}
   m_Layer: 0
   m_Name: EntryDoor
   m_TagString: Untagged
@@ -14925,17 +14998,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 1496738574}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81a7415300392fd4f8705d53d16a859a, type: 3}
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textDisplay: {fileID: 0}
-  objectiveComplete: {fileID: 0}
-  showNextObjective: {fileID: 0}
-  distanceToPlayer: 2
-  doorOpened: 0
-  door: {fileID: 1496738574}
-  doorOpenAnimation: entry_door_open_animation
-  doorCloseAnimation: entry_door_close_animation
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 0
+    i1: 0
+    i2: 0
+    i3: 0
+    i4: 0
+    i5: 0
+    i6: 0
+    i7: 0
+    i8: 0
+    i9: 0
+    i10: 0
+    i11: 0
+    i12: 0
+    i13: 0
+    i14: 0
+    i15: 0
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 1
 --- !u!82 &1496738581
 AudioSource:
   m_ObjectHideFlags: 0
@@ -15031,6 +15117,25 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1496738582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1496738574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79f44f0b82b97407d8c375884fb8fb66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textDisplay: {fileID: 0}
+  objectiveComplete: {fileID: 0}
+  showNextObjective: {fileID: 0}
+  distanceToPlayer: 2
+  doorOpened: 0
+  door: {fileID: 1496738574}
+  doorOpenAnimation: entry_door_open_animation
+  doorCloseAnimation: entry_door_close_animation
 --- !u!1 &1501461544
 GameObject:
   m_ObjectHideFlags: 0
@@ -15071,48 +15176,6 @@ MonoBehaviour:
   m_Script: {fileID: -1050975500, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1001 &1525272597
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4438523070224664, guid: d48ae562416a84aa59814bdfd3c70272, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -27.24
-      objectReference: {fileID: 0}
-    - target: {fileID: 4438523070224664, guid: d48ae562416a84aa59814bdfd3c70272, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 1.58
-      objectReference: {fileID: 0}
-    - target: {fileID: 4438523070224664, guid: d48ae562416a84aa59814bdfd3c70272, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 11.69
-      objectReference: {fileID: 0}
-    - target: {fileID: 4438523070224664, guid: d48ae562416a84aa59814bdfd3c70272, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4438523070224664, guid: d48ae562416a84aa59814bdfd3c70272, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4438523070224664, guid: d48ae562416a84aa59814bdfd3c70272, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4438523070224664, guid: d48ae562416a84aa59814bdfd3c70272, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4438523070224664, guid: d48ae562416a84aa59814bdfd3c70272, type: 2}
-      propertyPath: m_RootOrder
-      value: 11
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: d48ae562416a84aa59814bdfd3c70272, type: 2}
-  m_IsPrefabAsset: 0
 --- !u!1 &1529687745
 GameObject:
   m_ObjectHideFlags: 0
@@ -20769,6 +20832,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoSound: {fileID: 0}
+  currentPlayer: {fileID: 0}
+  currentPlayerAmmo: {fileID: 0}
   ammo: 30
 --- !u!65 &1684083406
 BoxCollider:
@@ -21368,9 +21433,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 211da4a840fc64f62b8beb1455bd71a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  internalAmmo: 0
+  currentAmmo: 0
   ammoDisplay: {fileID: 0}
-  internalClip: 0
+  clipAmmo: 0
   loadedAmmoDisplay: {fileID: 0}
 --- !u!1001 &1828011744
 Prefab:
@@ -21660,6 +21725,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoSound: {fileID: 0}
+  currentPlayer: {fileID: 0}
+  currentPlayerAmmo: {fileID: 0}
   ammo: 30
 --- !u!65 &1935495692
 BoxCollider:
@@ -21760,6 +21827,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoSound: {fileID: 0}
+  currentPlayer: {fileID: 0}
+  currentPlayerAmmo: {fileID: 0}
   ammo: 30
 --- !u!65 &1942667911
 BoxCollider:
@@ -26485,6 +26554,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoSound: {fileID: 0}
+  currentPlayer: {fileID: 0}
+  currentPlayerAmmo: {fileID: 0}
   ammo: 7
 --- !u!65 &2026789263
 BoxCollider:

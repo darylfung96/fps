@@ -69,7 +69,6 @@ public class start_up : MonoBehaviour {
                 vignetteSettings.intensity = operation(vignetteSettings.intensity, 0.05f);
                 yield return new WaitForSeconds(0.05f);
                 ppProfile.vignette.settings = vignetteSettings;
-                Debug.Log(vignetteSettings.intensity);
 
             }
         } else if (vignetteSettings.intensity > value)
@@ -79,7 +78,6 @@ public class start_up : MonoBehaviour {
                 vignetteSettings.intensity = operation(vignetteSettings.intensity, 0.05f);
                 yield return new WaitForSeconds(0.05f);
                 ppProfile.vignette.settings = vignetteSettings;
-                Debug.Log(vignetteSettings.intensity);
 
             }
         }

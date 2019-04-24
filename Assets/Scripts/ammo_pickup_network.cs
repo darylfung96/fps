@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class ammo_pickup : MonoBehaviour {
+public class ammo_pickup_network : NetworkBehaviour {
 
     public AudioSource ammoSound;
     public GameObject currentPlayer;
@@ -19,7 +20,9 @@ public class ammo_pickup : MonoBehaviour {
 	}
 
     private void OnTriggerEnter(Collider other)
-    { 
+    {
+        if (!isLocalPlayer) return;
+
         currentPlayerAmmo.clipAmmo += ammo;
         this.gameObject.SetActive(false);
         ammoSound.Play();

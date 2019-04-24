@@ -393,8 +393,9 @@ GameObject:
   - component: {fileID: 54637791572487972}
   - component: {fileID: 82076946081180800}
   - component: {fileID: 114257455197096494}
-  - component: {fileID: 114899433239012054}
-  - component: {fileID: 114588744369456070}
+  - component: {fileID: 114654270341828686}
+  - component: {fileID: 114403846691395060}
+  - component: {fileID: 114340017794555650}
   m_Layer: 0
   m_Name: FPSController
   m_TagString: player
@@ -614,9 +615,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4184311845487506}
-  - component: {fileID: 114992837315835566}
   - component: {fileID: 320983650600086556}
   - component: {fileID: 95769453628772248}
+  - component: {fileID: 114368357265573204}
   m_Layer: 0
   m_Name: startup
   m_TagString: Untagged
@@ -787,8 +788,8 @@ GameObject:
   - component: {fileID: 81586202158461062}
   - component: {fileID: 124455051989870628}
   - component: {fileID: 111366121174120640}
-  - component: {fileID: 114719845380869590}
   - component: {fileID: 114598320680446120}
+  - component: {fileID: 114712036352896674}
   m_Layer: 0
   m_Name: FirstPersonCharacter
   m_TagString: MainCamera
@@ -1281,7 +1282,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 224548571178986148}
-  - component: {fileID: 114605408252289340}
   m_Layer: 5
   m_Name: CrosshairObject
   m_TagString: Untagged
@@ -4600,6 +4600,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 20684150629338526}
+  currentPlayer: {fileID: 0}
+  currentPlayerAmmo: {fileID: 0}
   upCrosshair: {fileID: 1781844170413522}
   downCrosshair: {fileID: 1687525965785680}
   rightCrosshair: {fileID: 1831393992095138}
@@ -4678,6 +4680,38 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &114340017794555650
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1215554195698528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5353fa5badeab0408ab01cdef923356, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toTarget: 0
+  playerCamera: {fileID: 20684150629338526}
+  helperText: {fileID: 1659380306010316}
+  Objective1Complete: {fileID: 1950250043048756}
+  objective2: {fileID: 1846059744154222}
+  objective2complete: {fileID: 1606759602626288}
+  objective3: {fileID: 1808450575757182}
+--- !u!114 &114368357265573204
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1385477177331234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80956b1a539d149f982f0adb2d670b18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ppProfile: {fileID: 11400000, guid: 0c9a6907c72f64878801fd8b80a8f9a1, type: 2}
+  canvas: {fileID: 1833920635236988}
+  player: {fileID: 1215554195698528}
 --- !u!114 &114369445669916288
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4737,6 +4771,27 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 0
+--- !u!114 &114403846691395060
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1215554195698528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d09662fde8d9b4a3986b0b65f901eec2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 10
+  healthDisplay: {fileID: 1621255046780178}
+  showHurt: {fileID: 1704199761309790}
+  hurtSounds:
+  - {fileID: 82376367421551268}
+  - {fileID: 82407597419618740}
+  - {fileID: 82729643192685112}
+  sniperScope: {fileID: 1670033875882450}
+  crosshairObject: {fileID: 1352930856608946}
+  playerCamera: {fileID: 1586881040225100}
 --- !u!114 &114408298260515742
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5027,27 +5082,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Quit Game
---- !u!114 &114588744369456070
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1215554195698528}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d09662fde8d9b4a3986b0b65f901eec2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 10
-  healthDisplay: {fileID: 1621255046780178}
-  showHurt: {fileID: 1704199761309790}
-  hurtSounds:
-  - {fileID: 82376367421551268}
-  - {fileID: 82407597419618740}
-  - {fileID: 82729643192685112}
-  sniperScope: {fileID: 1670033875882450}
-  crosshairObject: {fileID: 1352930856608946}
-  playerCamera: {fileID: 1586881040225100}
 --- !u!114 &114598320680446120
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5101,17 +5135,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &114605408252289340
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1840137666803160}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c05f42c1e2a8044df832584d151599a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114616532954146186
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5124,6 +5147,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 20684150629338526}
+  currentPlayer: {fileID: 0}
+  currentPlayerAmmo: {fileID: 0}
   upCrosshair: {fileID: 1781844170413522}
   downCrosshair: {fileID: 1687525965785680}
   rightCrosshair: {fileID: 1831393992095138}
@@ -5141,6 +5166,27 @@ MonoBehaviour:
   bulletHole: {fileID: 0}
   blood: {fileID: 0}
   spiderBlood: {fileID: 0}
+--- !u!114 &114654270341828686
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1215554195698528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 4
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
 --- !u!114 &114661934804275294
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5207,6 +5253,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1215554195698528}
   pauseScript: {fileID: 0}
+--- !u!114 &114712036352896674
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1586881040225100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 212
+    i1: 138
+    i2: 229
+    i3: 98
+    i4: 65
+    i5: 106
+    i6: 132
+    i7: 170
+    i8: 89
+    i9: 129
+    i10: 75
+    i11: 223
+    i12: 211
+    i13: 199
+    i14: 2
+    i15: 114
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 1
 --- !u!114 &114714473884544546
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5240,18 +5318,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Paused
---- !u!114 &114719845380869590
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1586881040225100}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5353fa5badeab0408ab01cdef923356, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  toTarget: 0
 --- !u!114 &114727108257543976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5385,27 +5451,6 @@ MonoBehaviour:
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
---- !u!114 &114899433239012054
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1215554195698528}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_TransformSyncMode: 4
-  m_SendInterval: 0.1
-  m_SyncRotationAxis: 7
-  m_RotationSyncCompression: 0
-  m_SyncSpin: 0
-  m_MovementTheshold: 0.001
-  m_VelocityThreshold: 0.0001
-  m_SnapThreshold: 5
-  m_InterpolateRotation: 1
-  m_InterpolateMovement: 1
 --- !u!114 &114912662307377320
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5572,20 +5617,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114992837315835566
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1385477177331234}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80956b1a539d149f982f0adb2d670b18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ppProfile: {fileID: 11400000, guid: 0c9a6907c72f64878801fd8b80a8f9a1, type: 2}
-  canvas: {fileID: 1833920635236988}
-  player: {fileID: 1215554195698528}
 --- !u!124 &124455051989870628
 Behaviour:
   m_ObjectHideFlags: 1
