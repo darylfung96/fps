@@ -11,11 +11,17 @@ public class player_casting : NetworkBehaviour {
     public float toTarget;
     public Camera playerCamera;
 
+    // ui
     public GameObject helperText;
     public GameObject Objective1Complete;
     public GameObject objective2;
     public GameObject objective2complete;
     public GameObject objective3;
+
+    // guns
+    public GameObject realM9;
+    public GameObject realMP5K;
+    public GameObject gunText;
 
     private Ray ray;
     private int maxDistance = 2;
@@ -28,13 +34,18 @@ public class player_casting : NetworkBehaviour {
 	void Start () {
         actions = new Dictionary<string, Action<RaycastHit, GameObject[]>>()
         {
-            {"EntryDoor", (RaycastHit hit, GameObject[] ActionplayerUIs) => { doorAction(hit, ActionplayerUIs); } }
+            {"EntryDoor", (RaycastHit hit, GameObject[] ActionplayerUIs) => { doorAction(hit, ActionplayerUIs); } },
+            {"M9", (RaycastHit hit, GameObject[] ActionplayerUIs) => {gunAction(hit, ActionplayerUIs);  }},
+            {"MP5K", (RaycastHit hit, GameObject[] ActionplayerUIs) => {gunAction(hit, ActionplayerUIs);  }}
 
         };
 
         actionObjects = new Dictionary<string, GameObject[]>()
         {
-            {"EntryDoor", new GameObject[] {helperText, Objective1Complete, objective2} }
+            {"EntryDoor", new GameObject[] {helperText, Objective1Complete, objective2} },
+            {"M9", new GameObject[] {helperText, objective2complete, objective3, gunText, realM9} },
+            {"MP5K", new GameObject[] {helperText, objective2complete, objective3, gunText, realMP5K} },
+
         };
 
 
@@ -74,6 +85,21 @@ public class player_casting : NetworkBehaviour {
         open_door_network doorScript = (open_door_network) hit.transform.GetComponent(typeof(open_door_network));
         if (doorScript)
             doorScript.doorAction(ActionplayerUIs);
+
+    }
+
+    private void gunAction(RaycastHit hit, GameObject[] ActionplayerUIs)
+    {
+        /*
+   ActionPlayerUIs is a list of gameobject.
+   [0] = the helpertext to show on the screen
+   [1] = the objective to complete
+   [2] = the next objective to show
+   [3] = the player gun  
+   */
+        pickup_gun_network gunScript = (pickup_gun_network)hit.transform.GetComponent(typeof(pickup_gun_network));
+        if (gunScript)
+            gunScript.gunAction(hit, ActionplayerUIs);
 
     }
 

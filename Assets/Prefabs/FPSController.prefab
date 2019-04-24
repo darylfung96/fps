@@ -624,7 +624,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1396243768141872
 GameObject:
   m_ObjectHideFlags: 1
@@ -1273,7 +1273,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1840137666803160
 GameObject:
   m_ObjectHideFlags: 1
@@ -4698,6 +4698,9 @@ MonoBehaviour:
   objective2: {fileID: 1846059744154222}
   objective2complete: {fileID: 1606759602626288}
   objective3: {fileID: 1808450575757182}
+  realM9: {fileID: 1041218025996302}
+  realMP5K: {fileID: 1116547255503506}
+  gunText: {fileID: 1155682683673946}
 --- !u!114 &114368357265573204
 MonoBehaviour:
   m_ObjectHideFlags: 1

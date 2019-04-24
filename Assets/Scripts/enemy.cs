@@ -5,7 +5,6 @@ using UnityEngine;
 public class enemy : MonoBehaviour {
 
     public int health = 100;
-    public GameObject player;
     public GameObject enemyAnimation;
     public string idleAnimation;
     public string walkAnimation;
@@ -25,6 +24,7 @@ public class enemy : MonoBehaviour {
     private bool isAttacking = false;
     private bool gone = false;
     private bool isMoving = false;
+    private bool playerInSight = false;
 
 	// Use this for initialization
 	void Start () {
@@ -40,72 +40,87 @@ public class enemy : MonoBehaviour {
 
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.transform.tag == "player")
+        {
+            playerInSight = true;
+            transform.LookAt(other.transform);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.transform.tag == "player")
+            playerInSight = false;
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        RaycastHit shot;
+        if (other.transform.tag == "player")
+        {
+            transform.LookAt(other.transform);
+            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out shot)) {
+                if (shot.distance > attackDistance && shot.distance <= sightDistance && shot.transform.tag == "player")
+                {
+                    isMoving = false;
+                    transform.position = Vector3.MoveTowards(transform.position, other.transform.position, speed * Time.deltaTime);
+
+                    if (walkAnimation != "")
+                        enemyAnimation.GetComponent<Animation>().Play(walkAnimation);
+
+                    if (!hasSurprised)
+                    {
+                        hasSurprised = true;
+                        surprise.Play();
+                    }
+                }
+                // attack
+                else if (shot.distance < attackDistance && shot.transform.tag == "player")
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, other.transform.position, speed * 0.5f * Time.deltaTime);
+                    if (attackAnimation != "")
+                        enemyAnimation.transform.GetComponent<Animation>().Play(attackAnimation);
+
+                    if (!isAttacking)
+                        StartCoroutine(attackPlayer(other));
+                }
+            }
+
+        }
+    }
+
     // Update is called once per frame
     void Update () {
 
         if (gone)
             return;
 
-        RaycastHit shot;
-
-        // when player get to a distance that the enemy can see or hear
-        if (Vector3.Distance(transform.position, player.transform.position) < 15)
-            transform.LookAt(player.transform);
-
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out shot))
-        {
-            // chase players
-            if (shot.distance > attackDistance && shot.distance <= sightDistance && shot.transform.tag == "player")
-            {
-                isMoving = false;
-                transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
-
-                if (walkAnimation != "")
-                    enemyAnimation.GetComponent<Animation>().Play(walkAnimation);
-
-                if (!hasSurprised)
-                {
-                    hasSurprised = true;
-                    surprise.Play();
-                }
-            }
-            // attack
-            else if (shot.distance < attackDistance && shot.transform.tag == "player")
-            {
-                transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * 0.5f * Time.deltaTime);
-                if (attackAnimation != "")
-                    enemyAnimation.transform.GetComponent<Animation>().Play(attackAnimation);
-
-                if (!isAttacking && shot.transform.name == "FPSController")
-                    StartCoroutine(attackPlayer());
-            }
-            // idle or walk randomly
-            else
-            {
-                // if the previous animation is not done yet, we dont trigger anything 
-                if (isMoving) return;
-
-                float idleProb = Random.value;
-                if (idleProb > 0.5)
-                {
-                    if (idleAnimation != "")
-                        enemyAnimation.transform.GetComponent<Animation>().Play(idleAnimation);
-                }
-                else
-                {
-                    if (isWalkAround)
-                        StartCoroutine(moveToPosition());
-                }
-
-            }
-        }
-
-
-
         if (health <= 0)
         {
+            StopAllCoroutines();
             StartCoroutine(disappear());
         }
+
+        // if the previous animation is not done yet, we dont trigger anything 
+        // if playerinsight we want the zombie to run in trigger functions
+        if (playerInSight || isMoving) return;
+
+        float idleProb = Random.value;
+        if (idleProb > 0.5)
+        {
+            if (idleAnimation != "")
+                enemyAnimation.transform.GetComponent<Animation>().Play(idleAnimation);
+        }
+        else
+        {
+            if (isWalkAround)
+                StartCoroutine(moveToPosition());
+        }
+
+
+
     }
 
     private Vector3 getRandomPosition()
@@ -139,10 +154,11 @@ public class enemy : MonoBehaviour {
         isMoving = false;
     }
 
-    private IEnumerator attackPlayer()
+    private IEnumerator attackPlayer(Collider other)
     {
         isAttacking = true;
-        player playerScript = (player)player.GetComponent(typeof(player));
+        Debug.Log(other);
+        player_network playerScript = (player_network)other.gameObject.GetComponent(typeof(player_network));
         yield return new WaitForSeconds(1.6f);
         playerScript.decreaseHealth(enemyDamage);
         isAttacking = false;

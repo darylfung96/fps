@@ -7,13 +7,8 @@ using UnityEngine.Networking;
 public class pickup_gun_network : NetworkBehaviour {
 
     public float distanceToGun;
-    public GameObject helperText;
     public GameObject fakeGun;
-    public GameObject realGun;
-    public GameObject gunText;
-    public GameObject objectiveComplete;
-    public GameObject showNextObjective;
-    public AudioSource pickupAudio;
+    public AudioSource audioPickup;
     public string gunName;
 
 
@@ -27,35 +22,29 @@ public class pickup_gun_network : NetworkBehaviour {
         distanceToGun = player_casting.distanceToTarget;
     }
 
-    private void OnMouseOver()
+    public void gunAction(RaycastHit hit, GameObject[] actionPlayerUIs)
     {
-        if (!isLocalPlayer) return;
-
-        distanceToGun = player_casting.distanceToTarget;
-        if (distanceToGun <= 2)
+        GameObject helperText = actionPlayerUIs[0];
+        helperText.GetComponent<Text>().text = "Pickup " + gunName;
+        if (Input.GetButtonDown("Action"))
         {
-            helperText.GetComponent<Text>().text = "Pickup " + gunName;
+            GameObject objectiveComplete = actionPlayerUIs[1];
+            GameObject showNextObjective = actionPlayerUIs[2];
+            GameObject gunText = actionPlayerUIs[3];
+            GameObject realGun = actionPlayerUIs[4];
 
-            if (Input.GetButtonDown("Action"))
-            {
-                pickupAudio.Play();
-                fakeGun.SetActive(false);
-                realGun.SetActive(true);
-                realGun.GetComponent<Animation>().Play("gun_reload");
-                gunText.GetComponent<Text>().text = gunName;
-                objectiveComplete.SetActive(true);
-                showNextObjective.SetActive(true);
-                helperText.GetComponent<Text>().text = "";
-
-            }
+            audioPickup.Play();
+            fakeGun.SetActive(false);
+            realGun.SetActive(true);
+            realGun.GetComponent<Animation>().Play("gun_reload");
+            gunText.GetComponent<Text>().text = gunName;
+            objectiveComplete.SetActive(true);
+            showNextObjective.SetActive(true);
+            helperText.GetComponent<Text>().text = "";
 
         }
     }
 
-    private void OnMouseExit()
-    {
-        helperText.GetComponent<Text>().text = "";
-        }
         
 
 }
