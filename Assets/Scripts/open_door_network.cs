@@ -7,18 +7,15 @@ using System;
 
 public class open_door_network : NetworkBehaviour {
 
-    public GameObject textDisplay;
-    public GameObject objectiveComplete;
-    public GameObject showNextObjective;
-
-    public float distanceToPlayer;
+    [SyncVar]
     public bool doorOpened = false;
+
     public GameObject door;
     public string doorOpenAnimation;
     public string doorCloseAnimation;
 
-    private Dictionary<Boolean, Action> doorAnimations; 
-    private Dictionary<Boolean, string> helperTexts;
+    public Dictionary<Boolean, Action> doorAnimations; 
+    public Dictionary<Boolean, string> helperTexts;
 
     // Use this for initialization
     void Start() {
@@ -40,6 +37,16 @@ public class open_door_network : NetworkBehaviour {
 
     }
 
+    public void triggerDoor()
+    {
+        doorOpened = !doorOpened;
+        doorAnimations[doorOpened]();
+    }
+
+    public void playAudio()
+    {
+        GetComponent<AudioSource>().Play();
+    }
 
     public void doorAction(GameObject[] actionPlayerUIs)
     {
@@ -49,15 +56,19 @@ public class open_door_network : NetworkBehaviour {
            [1] = the objective to complete
            [2] = the next objective to show
         */
-           
         actionPlayerUIs[0].GetComponent<Text>().text = helperTexts[doorOpened];
         //helperText.GetComponent<Text>().text = helperTexts[doorOpened];
 
         if (Input.GetButtonDown("Action"))
         {
-            doorAnimations[doorOpened]();
-            doorOpened = !doorOpened;
-            GetComponent<AudioSource>().Play();
+            //doorAnimations[doorOpened]();
+            //doorOpened = !doorOpened;
+            //GetComponent<AudioSource>().Play();
+            if (isServer)
+                RpcDoorAction();
+            else
+                CmdDoorAction();
+
 
             if (actionPlayerUIs.Length > 1 && actionPlayerUIs[1] != null)
             {
@@ -67,6 +78,27 @@ public class open_door_network : NetworkBehaviour {
         }
 
     }
+
+    [Command]
+    public void CmdDoorAction()
+    {
+        Debug.Log("command door action");
+        doorAnimations[doorOpened]();
+        doorOpened = !doorOpened;
+        GetComponent<AudioSource>().Play();
+        RpcDoorAction();
+    }
+
+    [ClientRpc]
+    public void RpcDoorAction()
+    {
+        Debug.Log("client door action");
+        doorAnimations[doorOpened]();
+        doorOpened = !doorOpened;
+        GetComponent<AudioSource>().Play();
+    }
+
+
 
 
 }

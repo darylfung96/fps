@@ -74,6 +74,31 @@ public class player_casting : NetworkBehaviour {
 
     /* action starts here */
 
+
+   // door action //
+   [Command]
+    private void CmdDoorAction(NetworkInstanceId id)
+    {
+        GameObject door = NetworkServer.FindLocalObject(id);
+        open_door_network doorScript = door.GetComponent<open_door_network>();
+
+        doorScript.playAudio();
+        doorScript.triggerDoor();
+        doorScript.doorAnimations[doorScript.doorOpened]();
+        RpcDoorAction(id);
+    }
+
+    [ClientRpc]
+    private void RpcDoorAction(NetworkInstanceId id)
+    {
+        GameObject door = ClientScene.FindLocalObject(id);
+        open_door_network doorScript = door.GetComponent<open_door_network>();
+
+        doorScript.playAudio();
+        doorScript.triggerDoor();
+        doorScript.doorAnimations[doorScript.doorOpened]();
+    }
+
     private void doorAction(RaycastHit hit, GameObject[] ActionplayerUIs)
     /*
     ActionPlayerUIs is a list of gameobject.
@@ -82,10 +107,16 @@ public class player_casting : NetworkBehaviour {
     [2] = the next objective to show
     */
     {
-        open_door_network doorScript = (open_door_network) hit.transform.GetComponent(typeof(open_door_network));
-        if (doorScript)
-            doorScript.doorAction(ActionplayerUIs);
-
+        NetworkInstanceId id = hit.transform.GetComponent<NetworkIdentity>().netId;
+        open_door_network door = hit.transform.GetComponent<open_door_network>();
+        helperText.GetComponent<Text>().text = door.helperTexts[door.doorOpened];
+        if (Input.GetButtonDown("Action"))
+        {
+            if (isServer)
+                RpcDoorAction(id);
+            else
+                CmdDoorAction(id);
+        }
     }
 
     private void gunAction(RaycastHit hit, GameObject[] ActionplayerUIs)

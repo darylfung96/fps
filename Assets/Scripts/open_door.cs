@@ -6,11 +6,7 @@ using System;
 
 public class open_door : MonoBehaviour {
 
-    public GameObject textDisplay;
-    public GameObject objectiveComplete;
-    public GameObject showNextObjective;
 
-    public float distanceToPlayer;
     public bool doorOpened = false;
     public GameObject door;
     public string doorOpenAnimation;
@@ -18,7 +14,7 @@ public class open_door : MonoBehaviour {
 
     private Dictionary<Boolean, Action> doorAnimations; 
     private Dictionary<Boolean, string> helperTexts;
-
+    
     // Use this for initialization
     void Start() {
         doorAnimations = new Dictionary<Boolean, Action>()
@@ -39,45 +35,33 @@ public class open_door : MonoBehaviour {
 
     }
 
-    void doAction(RaycastHit hit)
+    public void doorAction(GameObject[] actionPlayerUIs)
     {
+        /*
+           ActionPlayerUIs is a list of gameobject.
+           [0] = the helpertext to show on the screen
+           [1] = the objective to complete
+           [2] = the next objective to show
+        */
 
-    }
+        actionPlayerUIs[0].GetComponent<Text>().text = helperTexts[doorOpened];
+        //helperText.GetComponent<Text>().text = helperTexts[doorOpened];
 
-    void rayCasted(RaycastHit hit)
-    {
-
-    }
-
-
-
-    private void OnMouseOver()
-    {
-
-        distanceToPlayer = player_casting.distanceToTarget;
-        if (distanceToPlayer <= 2)
+        if (Input.GetButtonDown("Action"))
         {
-            textDisplay.GetComponent<Text>().text = helperTexts[doorOpened];
+            doorAnimations[doorOpened]();
+            doorOpened = !doorOpened;
+            GetComponent<AudioSource>().Play();
 
-            if (Input.GetButtonDown("Action"))
+            if (actionPlayerUIs.Length > 1 && actionPlayerUIs[1] != null)
             {
-                    doorAnimations[doorOpened]();
-                    doorOpened = !doorOpened;
-                    GetComponent<AudioSource>().Play();
-
-                    if (objectiveComplete != null)
-                    {
-                        objectiveComplete.SetActive(true);
-                        showNextObjective.SetActive(true);
-                    }
-
+                actionPlayerUIs[1].SetActive(true);
+                actionPlayerUIs[2].SetActive(true);
             }
         }
+
     }
 
-    private void OnMouseExit()
-    {
-            textDisplay.GetComponent<Text>().text = "";
-    }
+
 
 }
